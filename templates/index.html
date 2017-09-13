@@ -5,23 +5,30 @@
     <meta charset="UTF-8">
     <title>Demo for "prospect" at "company"</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+    <!-- <script type="text/javascript" href="{{ url_for('static',filename='animations.js') }}"></script> -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script src="https://use.fontawesome.com/bad73222ca.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
     <div class="content-wrapper">
         <div class="header">
             <h1>Hi "prospect",</h1>
-            <h1>are you ready to boost "company's"</h1>
-            <h1>customer experience?</h1>
+            <h1>Welcome to this personalized demo</h1>
+            <h1>for "company"</h1>
         </div>
         <div class="intro">
             <img class="laptop" src="../static/images/empty-macbook.png">
-            <p>At Surfly, we’re really excited about the prospect of us working together. We are all about connecting people, and we would love to share our knowledge with you in order to help you connect to your cliënts in a fast, secure and easy way.</p>
+            <div id="container">
+                <img class="cursor" src="../static/images/cursor.png">
+                <img class="pencil" src="../static/images/pencil.png">
+                <img class="chatbox" src="../static/images/chatbox.gif">
+            </div>
+            <p>I'm really excited about the prospect of working together. Our mission at Surfly is to connect people, and I would love to aid you in reaching out to your cliënts in a fast, secure and easy way.</p>
         </div>
         <div class="pitch">
-            <p>"Inject pitch here according to title"</p>
+            <p>"Inject pitch here according to role"</p>
             <div class="image-group">
                 <img class="logo" src="../static/images/aegon.png">
                 <img class="plus" src="../static/images/plus.png">
@@ -30,19 +37,20 @@
         </div>
         <div class="dashboard">
             <img class="gif" src="../static/images/admin-queue.gif">
-            <p>From your Surfly dashboard, you’ll have all the tools you need to customize your sessions, manage your agents, view your history logs and answer incoming Co-browsing requests.</p>
+            <p>In your Surfly dashboard, you have all the tools you need to customize your sessions, manage your agents, view your history logs and answer incoming co-browsing requests.</p>
         </div>
         <div class="usage">
-            <p> With our (video)chat you can personalize the way "company" reaches out to clients. And you can even customize our API so that it complements your website’s look, flow and feel completely. And even better, there is no client side installation needed. It’s as simple as clicking a button, or sharing a URL.</p>
+            <p> With our (video)chat you can personalize the way "company" reaches out to clients. And you can even customize our API so that it complements your website’s look, flow and feel completely. And even better, there is no client side installation needed. It’s as simple as sharing a URL.</p>
             <iframe width="500" height="315" src="https://www.youtube.com/watch?v=doSdSsHC374">
     </iframe>
         </div>
         <div class="conclusion">
-            <p>Wether you’re looking to improve sales by reaching out to your prospects, or if you want your helpdesk agents to be able to connect to your customers better, Surfly gives you the tools you need to decrease your call rate and increase the quality of your conversations. If you would like to learn more, please feel free to contact me, or book a demo by clicking the button below.</p>
+            <p>Wether you’re looking to improve sales outcomes by reaching out to your prospects, or want your helpdesk agents to connect to your customers in a more personalized way, Surfly lets you decrease your call rates and increase the quality of your conversations. If you would like to learn more, please feel free to contact me, or book a demo by clicking the button below.</p>
         </div>
         <div class="closing">
-            <p>Looking forward to talking to you,</p>
+            <p>I look forward to talking to you,</p>
             <p class="consultant-name">Carolina</p>
+            <img class="avatar" src="../static/images/Carolina.png">
         </div>
         <div class="calendly">
             <p>Book a demo with me</p>
@@ -53,6 +61,55 @@
         </div>
         <p class="copyright"><i class="fa fa-copyright" aria-hidden="true"></i> Surfly</p>
     </div>
+    <script>
+        $(document).ready(function() {
+            animateDiv($('.cursor'));
+            animateDiv($('.pencil'));
+        });
+
+        function makeNewPosition($container) {
+
+            // Get viewport dimensions (remove the dimension of the div)
+            var h = $container.height() - 50;
+            var w = $container.width() - 50;
+
+            var nh = Math.floor(Math.random() * h);
+            var nw = Math.floor(Math.random() * w);
+
+            return [nh, nw];
+
+        }
+
+        function animateDiv($target) {
+            var newq = makeNewPosition($target.parent());
+            var oldq = $target.offset();
+            var speed = calcSpeed([oldq.top, oldq.left], newq);
+
+            $target.animate({
+                top: newq[0],
+                left: newq[1]
+            }, speed, function() {
+                animateDiv($target);
+            });
+
+        };
+
+        function calcSpeed(prev, next) {
+
+            var x = Math.abs(prev[1] - next[1]);
+            var y = Math.abs(prev[0] - next[0]);
+
+            var greatest = x > y ? x : y;
+
+            var speedModifier = 0.1;
+
+            var speed = Math.ceil(greatest / speedModifier);
+
+            return speed;
+
+        }
+
+    </script>
 </body>
 
 </html>
